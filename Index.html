@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,8 @@
     --glass: rgba(255, 255, 255, 0.25);
     --card: rgba(255,255,255,0.55);
     --divider: rgba(0, 0, 0, 0.08);
+
+    --header-height: 72px; /* used to avoid header overlap */
 }
 
 body.dark {
@@ -66,7 +69,10 @@ body {
 --------------------------------*/
 header {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: var(--header-height);
     backdrop-filter: blur(10px);
     background: var(--glass);
     box-shadow: 0 2px 14px rgba(0,0,0,0.15);
@@ -74,10 +80,11 @@ header {
 }
 
 .navbar {
-    padding: 15px 60px;
+    padding: 12px 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
 .logo {
@@ -89,6 +96,7 @@ header {
 .nav-links {
     display: flex;
     gap: 35px;
+    list-style: none;
 }
 
 .nav-links a {
@@ -125,8 +133,8 @@ header {
    HOME SECTION
 --------------------------------*/
 .home {
-    height: 100vh;
-    padding-top: 110px;
+    min-height: calc(100vh - var(--header-height));
+    padding-top: calc(var(--header-height) + 40px); /* prevent header overlap */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,14 +147,17 @@ header {
     flex: 1;
     animation: fadeInLeft 1s forwards;
     opacity: 0;
+    z-index: 1;
 }
 
 .home-right {
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
     animation: fadeInRight 1s forwards;
     opacity: 0;
+    z-index: 1;
 }
 
 @keyframes fadeInLeft {
@@ -194,11 +205,17 @@ header {
     text-decoration: none;
     transition: 0.3s;
     cursor: pointer;
+    border: none;
 }
 
 .btn:hover {
     transform: translateY(-3px);
     background: #333333;
+}
+
+.btn.small {
+    padding: 8px 14px;
+    font-size: 14px;
 }
 
 /* ------------------------------
@@ -273,21 +290,27 @@ section {
     box-shadow: 0 10px 25px rgba(0,0,0,0.20);
 }
 
-/* ------------------------------
-   EXPERIENCE
---------------------------------*/
-.exp-card {
-    background: var(--card);
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    transition: 0.3s;
-    cursor: pointer;
+/* small placeholder embed style for Power BI project */
+.project-embed {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, rgba(10,77,233,0.08), rgba(0,0,0,0.02));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 12px 0;
 }
 
-.exp-card:hover {
-    transform: translateX(8px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+/* ------------------------------
+   CERTIFICATIONS
+--------------------------------*/
+.cert-list {
+    display: grid;
+    gap: 14px;
+    max-width: 760px;
 }
 
 /* ------------------------------
@@ -314,6 +337,18 @@ footer a:hover {
 /* ------------------------------
    RESPONSIVE
 --------------------------------*/
+@media (max-width: 1000px) {
+    .home {
+        gap: 20px;
+    }
+
+    /* make the profile a bit smaller on widths < 1000px */
+    .profile-img {
+        width: 260px;
+        height: 260px;
+    }
+}
+
 @media (max-width: 850px) {
     .home {
         flex-direction: column-reverse;
@@ -326,7 +361,7 @@ footer a:hover {
         background: var(--bg);
         width: 220px;
         position: absolute;
-        top: 70px;
+        top: calc(var(--header-height) + 8px);
         right: 20px;
         padding: 20px;
         border-radius: 10px;
@@ -375,7 +410,6 @@ footer a:hover {
         font-size: 18px;
     }
 }
-
 </style>
 
 </head>
@@ -391,12 +425,14 @@ footer a:hover {
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
+            <li><a href="#certifications">Certifications</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
-        <button class="theme-btn" id="themeToggle">🌙</button>
-        <div class="menu-toggle" id="mobileMenu">☰</div>
+        <div style="display:flex; align-items:center;">
+            <button class="theme-btn" id="themeToggle">🌙</button>
+            <div class="menu-toggle" id="mobileMenu" style="margin-left:12px;">☰</div>
+        </div>
     </nav>
 </header>
 
@@ -410,8 +446,9 @@ footer a:hover {
     </div>
 
     <div class="home-right">
-        
-       <img class="profile-img" src="93guip.jpg" />
+        <img class="profile-img"
+             src="https://i.pinimg.com/originals/1d/ec/e2/1dece2c8357bdd7cee3b15036344faf5.jpg"
+             alt="Profile image" />
     </div>
 </section>
 
@@ -448,27 +485,40 @@ footer a:hover {
     <h2 class="title">Projects</h2>
     <div class="project-grid">
         <div class="project-card">
-            <h3>Project 1</h3>
-            <p>Short description here.</p>
+            <h3>Simple Project — Portfolio Template</h3>
+            <p>A lightweight, responsive portfolio template built with HTML, CSS and a bit of JS for interactions.</p>
             <a class="btn small" href="#">View</a>
         </div>
+
         <div class="project-card">
-            <h3>Project 2</h3>
-            <p>Short description here.</p>
-            <a class="btn small" href="#">View</a>
+            <h3>IPL Stats (Power BI)</h3>
+            <p>Interactive dashboard with IPL statistics and visualizations created in Power BI. Embedded or linked Power BI report (placeholder).</p>
+
+            <div class="project-embed">Power BI Report Preview</div>
+
+            <!-- Replace the link below with your published Power BI report link when available -->
+            <a class="btn small" href="#" target="_blank" rel="noopener noreferrer">Open Report</a>
         </div>
     </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- EXPERIENCE -->
-<section id="experience" class="reveal">
-    <h2 class="title">Experience</h2>
-    <div class="exp-card">
-        <h3>Software Developer - Company</h3>
-        <span>2022 - Present</span>
-        <p>Worked on scalable applications and modern UI features.</p>
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="reveal">
+    <h2 class="title">Certifications</h2>
+    <div class="cert-list">
+        <div class="exp-card">
+            <h3>NPTEL — Social Networks</h3>
+            <span>Score: 79%</span>
+            <p>Completed NPTEL course on Social Networks covering fundamentals, graph analysis and applications.</p>
+        </div>
+
+        <div class="exp-card">
+            <h3>Advanced Python — Udemy</h3>
+            <span>Certificate: Completed</span>
+            <p>Advanced Python concepts including modules, decorators, generators, concurrency, and practical project work.</p>
+        </div>
     </div>
 </section>
 
@@ -502,6 +552,7 @@ document.getElementById("themeToggle").onclick = () => {
 // MOBILE MENU
 document.getElementById("mobileMenu").onclick = () => {
     const nav = document.querySelector(".nav-links");
+    // toggle between flex and none (CSS hides it by default on small screens)
     nav.style.display = nav.style.display === "flex" ? "none" : "flex";
 };
 
@@ -525,6 +576,14 @@ typeEffect();
 
 // SCROLL REVEAL
 window.addEventListener("scroll", () => {
+    document.querySelectorAll(".reveal").forEach((el) => {
+        let top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 50) el.classList.add("active");
+    });
+});
+
+// Ensure reveal elements are checked on load (in case some are already visible)
+window.addEventListener("load", () => {
     document.querySelectorAll(".reveal").forEach((el) => {
         let top = el.getBoundingClientRect().top;
         if (top < window.innerHeight - 50) el.classList.add("active");
