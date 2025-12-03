@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +34,8 @@
 }
 
 body.dark {
-    --bg: #0f0f0f;
+    /* Improved dark theme background color */
+    --bg: #181c23;
     --text: #f4f4f4;
 
     /* DARK THEME — BLUE (#0a4de9) */
@@ -342,7 +342,6 @@ footer a:hover {
         gap: 20px;
     }
 
-    /* make the profile a bit smaller on widths < 1000px */
     .profile-img {
         width: 260px;
         height: 260px;
@@ -375,7 +374,7 @@ footer a:hover {
 }
 
 .home-left h1 {
-    font-size: 52px; /* increased from default ~32px */
+    font-size: 52px;
     font-weight: 800;
     line-height: 1.2;
 }
@@ -385,14 +384,14 @@ footer a:hover {
 }
 
 .home-left h2.typing-text {
-    font-size: 36px; /* increased */
+    font-size: 36px;
     font-weight: 600;
     color: var(--accent);
     margin-top: 12px;
 }
 
 .home-left p {
-    font-size: 20px; /* bigger paragraph */
+    font-size: 20px;
     margin-top: 20px;
     line-height: 1.6;
 }
@@ -550,7 +549,6 @@ document.getElementById("themeToggle").onclick = () => {
 // MOBILE MENU
 document.getElementById("mobileMenu").onclick = () => {
     const nav = document.querySelector(".nav-links");
-    // toggle between flex and none (CSS hides it by default on small screens)
     nav.style.display = nav.style.display === "flex" ? "none" : "flex";
 };
 
@@ -580,7 +578,7 @@ window.addEventListener("scroll", () => {
     });
 });
 
-// Ensure reveal elements are checked on load (in case some are already visible)
+// Ensure reveal elements are checked on load
 window.addEventListener("load", () => {
     document.querySelectorAll(".reveal").forEach((el) => {
         let top = el.getBoundingClientRect().top;
