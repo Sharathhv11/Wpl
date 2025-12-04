@@ -31,6 +31,12 @@
         font-family: "Poppins", sans-serif;
       }
 
+      /* enable smooth scrolling and reserve space for fixed header */
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* adjust if your header height changes */
+      }
+
       :root {
         --bg: #f6f7fb;
         --text: #1f1f1f;
@@ -1202,6 +1208,7 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#achievements">Achievements</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
@@ -1784,6 +1791,35 @@
       } else if (window.lucide && typeof lucide.replace === "function") {
         lucide.replace();
       }
+    </script>
+
+    <script>
+      // Smooth-scroll offset for fixed header (JS fallback + close mobile menu)
+      (function () {
+        const header = document.querySelector("header");
+        const headerHeight = () => (header ? header.offsetHeight : 0) + 8;
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (!href || href === "#") return;
+            const target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+            const top =
+              target.getBoundingClientRect().top +
+              window.scrollY -
+              headerHeight();
+            window.scrollTo({ top, behavior: "smooth" });
+
+            // close mobile nav if open
+            const navMenu = document.getElementById("navMenu");
+            if (navMenu && navMenu.classList.contains("open")) {
+              navMenu.classList.remove("open");
+            }
+          });
+        });
+      })();
     </script>
 
     <script>
